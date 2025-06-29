@@ -9,20 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "next": "15.3.4",
-    "@repo/ui": "workspace:*",
     "@repo/api": "workspace:*",
-    "@repo/shared": "workspace:*"
+    "@repo/shared": "workspace:*",
+    "@repo/ui": "workspace:*",
+    "next": "15.3.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
     "@types/node": "^20.19.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vanilla-extract/next-plugin": "^2.4.14",
     "eslint": "^9",
     "eslint-config-next": "15.3.4",
-    "@eslint/eslintrc": "^3"
+    "typescript": "^5"
   }
 }
