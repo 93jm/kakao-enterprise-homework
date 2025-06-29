@@ -2,9 +2,11 @@ import '@/styles/reset.css'
 import '@/styles/global.css'
 import '@/styles/pretendard.css'
 
+import DashboardLayout from '@/components/layout/DashboardLayout'
+import QueryProvider from '@/providers/QueryProvider'
+
 import type { Metadata } from 'next'
 import { lightTheme } from '@/styles/theme/light.css'
-import DashboardLayout from '@/components/layout/DashboardLayout'
 
 export const metadata: Metadata = {
   title: 'homework - 이정민',
@@ -19,7 +21,9 @@ export default function RootLayout({
   return (
     <html lang='ko' className={lightTheme}>
       <body>
-        <DashboardLayout>{children}</DashboardLayout>
+        <QueryProvider>
+          <DashboardLayout>{children}</DashboardLayout>
+        </QueryProvider>
       </body>
     </html>
   )
