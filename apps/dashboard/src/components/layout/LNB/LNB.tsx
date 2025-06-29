@@ -26,7 +26,7 @@ const LNB = () => {
           <NavItem href='/' isActive={isActive('/')}>
             홈
           </NavItem>
-          <NavItem href='/board' isActive={isActive('/board')}>
+          <NavItem href='/serviceBoard' isActive={isActive('/serviceBoard')}>
             서비스게시판
           </NavItem>
         </NavList>

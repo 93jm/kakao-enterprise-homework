@@ -1,5 +1,11 @@
+import { Button } from '@/components/common'
+
 const ServiceBoard = () => {
-  return <div>서비스 게시판</div>
+  return (
+    <div>
+      <div>서비스 게시판</div>
+    </div>
+  )
 }
 
 export default ServiceBoard
