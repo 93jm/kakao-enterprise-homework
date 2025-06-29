@@ -1,2 +1,14 @@
 .idea
 .env
+
+
+# ts
+*.tsbuildinfo
+
+# dependencies
+node_modules/
+
+# build
+dist/
+.next/
+.turbo/

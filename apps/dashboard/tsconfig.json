@@ -1,0 +1,16 @@
+{
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "extends": "../../packages/config/tsconfig.json",
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "declaration": false, // 프로젝트는 타입 선언 파일 불필요하므로 해당 옵션만 override처리
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
