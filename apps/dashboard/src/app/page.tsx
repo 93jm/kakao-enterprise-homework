@@ -1,5 +1,11 @@
-const Home = () => {
-  return <div></div>;
-};
+import { Button } from '@repo/ui'
 
-export default Home;
+const Home = () => {
+  return (
+    <div>
+      <Button />
+    </div>
+  )
+}
+
+export default Home

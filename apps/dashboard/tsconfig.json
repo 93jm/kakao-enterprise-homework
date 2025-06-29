@@ -12,8 +12,6 @@
     "paths": {
       "@/*": ["./src/*"],
       "@repo/ui": ["../../packages/ui/src/index.ts"],
-      "@repo/api": ["../../packages/api/src/index.ts"],
-      "@repo/shared": ["../../packages/shared/src/index.ts"],
       "@repo/config": ["../../packages/config"]
     }
   }
