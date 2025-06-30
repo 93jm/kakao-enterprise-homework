@@ -35,7 +35,10 @@ const createGitHubHandlers = () => ({
       state: state as any
     })
 
-    return response.data
+    return {
+      items: response.data,
+      total_count: response.data.length
+    }
   },
 
   'POST:/api/github/issues': async (req: NextRequest) => {

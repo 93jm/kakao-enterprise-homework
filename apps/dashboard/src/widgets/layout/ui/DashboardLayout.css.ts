@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { flexColumn, flexRow, theme } from '@/styles'
+import { flexColumn, flexRow, flexRowAlignCenter, theme } from '@/styles'
 
 export const layoutContainer = style({
   ...flexColumn,
@@ -46,4 +46,9 @@ export const button = style({
     borderColor: theme.color.border.dark,
     backgroundColor: theme.color.border.light
   }
+})
+
+export const rightContent = style({
+  ...flexRowAlignCenter,
+  gap: '16px'
 })
