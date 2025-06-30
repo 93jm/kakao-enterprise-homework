@@ -26,17 +26,12 @@ const createGitHubHandlers = () => ({
     const { searchParams } = new URL(req.url)
     const page = parseInt(searchParams.get('page') || '1')
     const per_page = parseInt(searchParams.get('per_page') || '10')
-    const state = searchParams.get('state') || 'open'
-    const q = searchParams.get('q') || '' // 검색어 (나중에 사용)
+    const q = searchParams.get('q') || ''
 
-    let query = `repo:${GITHUB_REPO_CONFIG.owner}/${GITHUB_REPO_CONFIG.repo} is:issue`
-
-    if (state !== 'all') {
-      query += ` state:${state}`
-    }
+    let query = `repo:${GITHUB_REPO_CONFIG.owner}/${GITHUB_REPO_CONFIG.repo} is:issue state:open`
 
     if (q) {
-      query += ` ${q}`
+      query += ` in:title ${q}`
     }
 
     const response = await githubClient.rest.search.issuesAndPullRequests({

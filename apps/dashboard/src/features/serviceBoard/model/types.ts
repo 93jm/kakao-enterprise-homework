@@ -5,4 +5,5 @@ export interface BoardItem {
     login: string
   }
   created_at: string
+  number: number
 }

@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import { useModalStore, ModalItem } from '@/shared/store/modal'
 
-export const useModal = () => {
+const useModal = () => {
   const { modals, openModal, closeModal, closeAllModals } = useModalStore()
 
   const open = (content: ReactNode, options?: Partial<Omit<ModalItem, 'id' | 'content'>>) => {
@@ -26,3 +26,5 @@ export const useModal = () => {
     modalsCount: modals.length
   }
 }
+
+export default useModal

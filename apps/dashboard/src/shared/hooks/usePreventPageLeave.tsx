@@ -1,13 +1,14 @@
 import { useEffect, useRef } from 'react'
-import { useModal } from './useModal'
+import useModal from './useModal'
 import { ConfirmModal } from '../ui'
 
 interface Props {
   isDirty: boolean
   isSubmitting: boolean
+  allowNavigate?: boolean
 }
 
-const usePreventPageLeave = ({ isDirty, isSubmitting }: Props) => {
+const usePreventPageLeave = ({ isDirty, isSubmitting, allowNavigate = false }: Props) => {
   const { openModal, closeModal } = useModal()
   const hasHistoryBack = useRef(false)
 
@@ -25,7 +26,7 @@ const usePreventPageLeave = ({ isDirty, isSubmitting }: Props) => {
         return
       }
 
-      if (isDirty && !isSubmitting) {
+      if (isDirty && !isSubmitting && !allowNavigate) {
         openModal(
           <ConfirmModal
             title='작성 중인 내용이 사라집니다.'
@@ -61,7 +62,7 @@ const usePreventPageLeave = ({ isDirty, isSubmitting }: Props) => {
       window.removeEventListener('beforeunload', handleBeforeUnload)
       window.removeEventListener('popstate', handlePopState)
     }
-  }, [isDirty, isSubmitting, openModal, closeModal])
+  }, [isDirty, isSubmitting, openModal, closeModal, allowNavigate])
 }
 
 export default usePreventPageLeave

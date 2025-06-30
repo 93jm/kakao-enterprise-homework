@@ -1,10 +1,10 @@
 export interface IssueListParams {
   page?: number
   per_page?: number
-  state?: 'open' | 'closed' | 'all'
   sort?: 'created' | 'updated' | 'comments'
   direction?: 'asc' | 'desc'
   labels?: string
+  q?: string // 검색어 파라미터 추가
 }
 
 export interface CreateIssueParams {

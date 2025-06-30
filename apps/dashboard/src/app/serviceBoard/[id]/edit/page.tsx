@@ -6,29 +6,46 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Input, TextArea, Button, Title } from '@/shared/ui'
 import { usePreventPageLeave } from '@/shared/hooks'
 import { formIssueSchema, type FormIssueData } from '@/features/serviceBoard/model'
-import { useCreateIssueMutation } from '@/features/github'
+import { useIssue, useUpdateIssueMutation } from '@/features/github'
 import { toast } from 'sonner'
-import { useState } from 'react'
+import { use, useEffect, useState } from 'react'
 
 const INITIAL_VALUES = {
   title: '',
   body: ''
 }
 
-const CreateIssuePage = () => {
+interface Props {
+  params: Promise<{ id: string }>
+}
+
+const EditIssuePage = ({ params }: Props) => {
   const router = useRouter()
-  const { mutate: createIssue, isPending } = useCreateIssueMutation()
+  const resolvedParams = use(params)
+  const issueNumber = parseInt(resolvedParams.id)
+  const { data: issue, isLoading: isLoadingIssue } = useIssue(issueNumber)
+  const { mutate: updateIssue, isPending } = useUpdateIssueMutation()
   const [isSuccess, setIsSuccess] = useState(false)
 
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting, isDirty }
   } = useForm<FormIssueData>({
     resolver: zodResolver(formIssueSchema),
     defaultValues: INITIAL_VALUES,
     mode: 'onBlur'
   })
+
+  useEffect(() => {
+    if (issue) {
+      reset({
+        title: issue.title,
+        body: issue.body || ''
+      })
+    }
+  }, [issue, reset])
 
   usePreventPageLeave({
     isDirty,
@@ -37,24 +54,34 @@ const CreateIssuePage = () => {
   })
 
   const onSubmit = (data: FormIssueData) => {
-    createIssue(data, {
-      onSuccess: () => {
-        setIsSuccess(true) 
-        toast.success('이슈 등록을 성공했습니다.')
-
-        setTimeout(() => {
-          router.push('/serviceBoard')
-        }, 0)
+    updateIssue(
+      { 
+        issueNumber,
+        params: data
       },
-      onError: error => {
-        toast.error('이슈 등록에 실패했습니다.')
+      {
+        onSuccess: () => {
+          setIsSuccess(true) 
+          toast.success('이슈 수정을 성공했습니다.')
+  
+          setTimeout(() => {
+            router.push('/serviceBoard')
+          }, 0)
+        },
+        onError: () => {
+          toast.error('이슈 수정에 실패했습니다.')
+        }
       }
-    })
+    )
+  }
+
+  if (isLoadingIssue) {
+    return <div>Loading...</div>
   }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      <Title>게시글 등록</Title>
+      <Title>게시글 수정</Title>
       <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
         <Controller
           name='title'
@@ -71,8 +98,11 @@ const CreateIssuePage = () => {
           )}
         />
         <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}>
+          <Button type='button' variant='secondary' onClick={() => router.back()}>
+            취소
+          </Button>
           <Button type='submit' disabled={isPending}>
-            {isPending ? '등록 중...' : '등록'}
+            {isPending ? '수정 중...' : '수정'}
           </Button>
         </div>
       </form>
@@ -80,4 +110,4 @@ const CreateIssuePage = () => {
   )
 }
 
-export default CreateIssuePage
+export default EditIssuePage 

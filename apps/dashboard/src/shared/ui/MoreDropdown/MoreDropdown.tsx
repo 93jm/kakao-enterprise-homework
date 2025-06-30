@@ -1,35 +1,25 @@
-'use client'
-
-import { useRouter } from 'next/navigation'
 import { Dropdown } from '@/shared/ui/Dropdown'
 import * as styles from './MoreDropdown.css'
 
 interface MoreDropdownProps {
-  itemId: number
-  onDelete: (id: number) => void
+  onEdit?: () => void
+  onDelete?: () => void
 }
 
-const MoreDropdown = ({ itemId, onDelete }: MoreDropdownProps) => {
-  const router = useRouter()
-
-  const handleEdit = () => {
-    router.push(`/serviceBoard/${itemId}/edit`)
-  }
-
-  const handleDelete = () => {
-    console.log('삭제 클릭:', itemId)
-    onDelete(itemId)
-  }
-
+const MoreDropdown = ({ onEdit, onDelete }: MoreDropdownProps) => {
   return (
     <Dropdown trigger={<button className={styles.triggerButton}>...</button>}>
       <div className={styles.menuContainer}>
-        <button className={styles.menuItem} onClick={handleEdit}>
-          수정
-        </button>
-        <button className={styles.menuItem} onClick={handleDelete}>
-          삭제
-        </button>
+        {onEdit && (
+          <button className={styles.menuItem} onClick={onEdit}>
+            수정
+          </button>
+        )}
+        {onDelete && (
+          <button className={styles.menuItem} onClick={onDelete}>
+            삭제
+          </button>
+        )}
       </div>
     </Dropdown>
   )

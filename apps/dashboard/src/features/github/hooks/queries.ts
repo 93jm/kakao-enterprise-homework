@@ -24,10 +24,6 @@ export const useCreateIssueMutation = () => {
   return useMutation({
     mutationFn: (params: CreateIssueParams) => createIssue(params),
     onSuccess: newIssue => {
-      /**
-       * 깃허브 API가 이슈 등록시에 바로 List 데이터가 갱신이 되지 않아
-       * 임시로 성공 후 받은 데이터를 밀어 넣습니다.
-       */
       queryClient.setQueriesData({ queryKey: ['issues', 'list'] }, (oldData: any) => {
         if (!oldData?.items) {
           return oldData
@@ -48,8 +44,14 @@ export const useUpdateIssueMutation = () => {
 
   return useMutation({
     mutationFn: ({ issueNumber, params }: { issueNumber: number; params: any }) => updateIssue(issueNumber, params),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['issues'] })
+    onSuccess: (_, { issueNumber }) => {
+      queryClient.invalidateQueries({
+        queryKey: ['issues', 'detail', issueNumber]
+      })
+      
+      queryClient.invalidateQueries({
+        queryKey: ['issues', 'list']
+      })
     }
   })
 }
@@ -59,8 +61,22 @@ export const useDeleteIssueMutation = () => {
 
   return useMutation({
     mutationFn: deleteIssue,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['issues'] })
+    onSuccess: (_, deletedIssueNumber) => {
+      queryClient.setQueriesData({ queryKey: ['issues', 'list'] }, (oldData: any) => {
+        if (!oldData?.items) {
+          return oldData
+        }
+
+        return {
+          ...oldData,
+          items: oldData.items.filter((item: any) => item.number !== deletedIssueNumber),
+          total_count: Math.max(0, (oldData.total_count || 0) - 1)
+        }
+      })
+
+      queryClient.removeQueries({
+        queryKey: ['issues', 'detail', deletedIssueNumber]
+      })
     }
   })
 }

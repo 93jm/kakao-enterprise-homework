@@ -8,8 +8,9 @@ export const getIssues = async (params: IssueListParams = {}) => {
   if (params.per_page) {
     searchParams.set('per_page', params.per_page.toString())
   }
-  if (params.state) {
-    searchParams.set('state', params.state)
+
+  if (params.q) {  // 검색어 파라미터 추가
+    searchParams.set('q', params.q)
   }
 
   const response = await fetch(`/api/github/issues?${searchParams}`)
