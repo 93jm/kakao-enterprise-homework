@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
-import { GNB } from './GNB'
-import { LNB } from './LNB'
+import { GNB } from '../../headers'
+import { LNB } from '../../sidebar'
 import * as styles from './DashboardLayout.css'
 
 interface Props {

@@ -1,14 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { queryKeys } from './queryKeys'
-import {
-  getIssues,
-  getIssue,
-  createIssue,
-  updateIssue,
-  deleteIssue,
-  type IssueListParams,
-  type CreateIssueParams
-} from '@/lib/api/github'
+import { queryKeys } from '@/shared/lib/queries/queryKeys'
+import { getIssues, getIssue, createIssue, updateIssue, deleteIssue } from '../api/github.issues'
+import { CreateIssueParams, IssueListParams } from '../model/types'
 
 export const useIssues = (params: IssueListParams = {}) => {
   return useQuery({

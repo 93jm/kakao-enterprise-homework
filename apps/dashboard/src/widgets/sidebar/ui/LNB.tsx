@@ -1,7 +1,7 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { NavList, NavItem } from '@/components/common'
+import { NavList, NavItem } from '@/shared/ui'
 import * as styles from './LNB.css'
 
 const LNB = () => {

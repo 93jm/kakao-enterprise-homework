@@ -1,7 +1,11 @@
 'use client'
 
 const TestPage = () => {
-  return <div>test용 페이지</div>
+  return (
+    <div>
+      <h1>test용 페이지</h1>
+    </div>
+  )
 }
 
 export default TestPage

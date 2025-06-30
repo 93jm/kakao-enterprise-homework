@@ -2,11 +2,11 @@ import '@/styles/reset.css'
 import '@/styles/global.css'
 import '@/styles/pretendard.css'
 
-import DashboardLayout from '@/components/layout/DashboardLayout'
 import QueryProvider from '@/providers/QueryProvider'
 
 import type { Metadata } from 'next'
 import { lightTheme } from '@/styles/theme/light.css'
+import { DashboardLayout } from '@/widgets/layout'
 
 export const metadata: Metadata = {
   title: 'homework - 이정민',
