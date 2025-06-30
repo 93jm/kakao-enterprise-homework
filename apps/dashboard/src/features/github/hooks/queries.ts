@@ -23,8 +23,22 @@ export const useCreateIssueMutation = () => {
 
   return useMutation({
     mutationFn: (params: CreateIssueParams) => createIssue(params),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['issues', 'list'] })
+    onSuccess: newIssue => {
+      /**
+       * 깃허브 API가 이슈 등록시에 바로 List 데이터가 갱신이 되지 않아
+       * 임시로 성공 후 받은 데이터를 밀어 넣습니다.
+       */
+      queryClient.setQueriesData({ queryKey: ['issues', 'list'] }, (oldData: any) => {
+        if (!oldData?.items) {
+          return oldData
+        }
+
+        return {
+          ...oldData,
+          items: [newIssue, ...oldData.items],
+          total_count: (oldData.total_count || 0) + 1
+        }
+      })
     }
   })
 }

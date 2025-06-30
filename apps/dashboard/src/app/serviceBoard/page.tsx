@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Table, Pagination, VIEW_TYPE, Title, MoreDropdown } from '@/shared/ui'
+import { Table, Pagination, VIEW_TYPE, Title, MoreDropdown, Button } from '@/shared/ui'
 import { BoardCard } from '@/features/serviceBoard/ui'
 import { useIssues } from '@/features/github'
 import { useViewTypeStore } from '@/shared/store/viewType'
@@ -63,11 +63,14 @@ const ServiceBoardPage = () => {
     return <div>Loading...</div>
   }
 
-  console.log('>> ', issues?.items)
-
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      <Title>서비스 게시판</Title>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Title>서비스 게시판</Title>
+        <Button variant='secondary' onClick={() => router.push('/serviceBoard/create')}>
+          등록
+        </Button>
+      </div>
       {viewType === VIEW_TYPE.LIST ? (
         <Table columns={columns} data={issues?.items || []} rowKey='number' />
       ) : (

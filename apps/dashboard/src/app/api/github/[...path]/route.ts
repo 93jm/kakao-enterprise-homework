@@ -27,17 +27,30 @@ const createGitHubHandlers = () => ({
     const page = parseInt(searchParams.get('page') || '1')
     const per_page = parseInt(searchParams.get('per_page') || '10')
     const state = searchParams.get('state') || 'open'
+    const q = searchParams.get('q') || '' // 검색어 (나중에 사용)
 
-    const response = await githubClient.rest.issues.listForRepo({
-      ...GITHUB_REPO_CONFIG,
+    let query = `repo:${GITHUB_REPO_CONFIG.owner}/${GITHUB_REPO_CONFIG.repo} is:issue`
+
+    if (state !== 'all') {
+      query += ` state:${state}`
+    }
+
+    if (q) {
+      query += ` ${q}`
+    }
+
+    const response = await githubClient.rest.search.issuesAndPullRequests({
+      q: query,
       page,
       per_page,
-      state: state as any
+      sort: 'created',
+      order: 'desc'
     })
 
     return {
-      items: response.data,
-      total_count: response.data.length
+      items: response.data.items,
+      total_count: response.data.total_count,
+      incomplete_results: response.data.incomplete_results
     }
   },
 

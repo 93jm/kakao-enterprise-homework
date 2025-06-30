@@ -7,6 +7,8 @@ import QueryProvider from '@/providers/QueryProvider'
 import type { Metadata } from 'next'
 import { lightTheme } from '@/styles/theme/light.css'
 import { DashboardLayout } from '@/widgets/layout'
+import { Toaster } from 'sonner'
+import { Modal } from '@/shared/ui/Modal'
 
 export const metadata: Metadata = {
   title: 'homework - 이정민',
@@ -23,6 +25,8 @@ export default function RootLayout({
       <body>
         <QueryProvider>
           <DashboardLayout>{children}</DashboardLayout>
+          <Toaster position='top-right' />
+          <Modal />
         </QueryProvider>
       </body>
     </html>
