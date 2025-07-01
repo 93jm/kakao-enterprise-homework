@@ -1,14 +1,14 @@
 import '@/styles/reset.css'
 import '@/styles/global.css'
 import '@/styles/pretendard.css'
-
-import QueryProvider from '@/providers/QueryProvider'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 import type { Metadata } from 'next'
 import { lightTheme } from '@/styles/theme/light.css'
 import { DashboardLayout } from '@/widgets/layout'
 import { Toaster } from 'sonner'
 import { Modal } from '@/shared/ui/Modal'
+import { HydrationProvider, QueryProvider } from '@/providers'
 
 export const metadata: Metadata = {
   title: 'homework - 이정민',

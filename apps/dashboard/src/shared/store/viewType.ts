@@ -1,33 +1,42 @@
 import { create } from 'zustand'
-import { storage } from '@/shared/utils/storage'
-import { VIEW_TYPE, VIEW_TYPE_STORAGE_KEY, type ViewType } from '@/shared/ui/ViewTypeSelector/types'
+import { persist } from 'zustand/middleware'
+import { VIEW_TYPE, type ViewType } from '@/shared/ui/ViewTypeSelector/types'
 
 interface ViewTypeState {
   home: ViewType
   serviceBoard: ViewType
+  hasHydrated: boolean
   setViewType: (page: 'home' | 'serviceBoard', type: ViewType) => void
+  setHasHydrated: (state: boolean) => void
 }
 
-const initializeStorage = (key: string, defaultValue: ViewType): ViewType => {
-  const storedValue = storage.getItem(key)
-  if (!storedValue) {
-    storage.setItem(key, defaultValue)
-  }
-  return storage.getItem(key, defaultValue) as ViewType
-}
+export const useViewTypeStore = create<ViewTypeState>()(
+  persist(
+    (set) => ({
+      home: VIEW_TYPE.LIST,
+      serviceBoard: VIEW_TYPE.LIST,
+      hasHydrated: false,
+      
+      setViewType: (page, type) => {
+        set(state => ({
+          ...state,
+          [page]: type
+        }))
+      },
 
-export const useViewTypeStore = create<ViewTypeState>(set => ({
-  //localstorage 초기화가 필요합니다.
-  home: initializeStorage(VIEW_TYPE_STORAGE_KEY.HOME, VIEW_TYPE.LIST),
-  serviceBoard: initializeStorage(VIEW_TYPE_STORAGE_KEY.SERVICE_BOARD, VIEW_TYPE.LIST),
-
-  setViewType: (page, type) => {
-    const storageKey = page === 'home' ? VIEW_TYPE_STORAGE_KEY.HOME : VIEW_TYPE_STORAGE_KEY.SERVICE_BOARD
-
-    storage.setItem(storageKey, type)
-    set(state => ({
-      ...state,
-      [page]: type
-    }))
-  }
-}))
+      setHasHydrated: (state) => {
+        set({ hasHydrated: state })
+      }
+    }),
+    {
+      name: 'viewType-storage',
+      partialize: (state) => ({
+        home: state.home,
+        serviceBoard: state.serviceBoard
+      }),
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated(true)
+      }
+    }
+  )
+)
