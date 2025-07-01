@@ -165,8 +165,6 @@ async function handleProxy(req: NextRequest, method: 'GET' | 'POST' | 'PUT' | 'D
       }
     })
   } catch (error: any) {
-    console.error('GitHub API Proxy Error:', error)
-
     if (error.status) {
       return new NextResponse(
         JSON.stringify({
