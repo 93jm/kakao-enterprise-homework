@@ -1,0 +1,13 @@
+node_modules
+npm-debug.log*
+pnpm-debug.log*
+.next/
+out/
+.env*
+.vscode
+.idea
+.git
+.gitignore
+*.log
+.DS_Store
+README.md 
