@@ -268,5 +268,3 @@ docker run -p 3000:3000 \
 ## 🔗 참고 자료
 
 > 구현 과정에서 참고한 자료가 있다면 여기에 작성해주세요.
-
-- https://github.com/octokit/plugin-rest-endpoint-methods.js/blob/main/docs/search/issuesAndPullRequests.md
