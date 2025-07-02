@@ -38,7 +38,7 @@
 ### 🎯 추가 요구사항
 
 - [x] 게시글 작성 중, 페이지 이동
-- [ ] 도커 설정
+- [x] 도커 설정
 - [ ] Module Federation 적용
 
 ---
@@ -103,11 +103,20 @@
 ### 4. 추가 요구사항
 
 - **게시글 작성 중 페이지 이동 방지**:
+
   - `usePreventPageLeave` 커스텀 훅 구현
     - 브라우저의 뒤로가기/앞으로가기 제어
     - 폼 데이터 변경 감지 (`isDirty` 상태 활용)
     - 제출 중 상태 처리 (`isSubmitting` 상태 관리)
     - 성공 시 페이지 이동 허용 (`allowNavigate` 플래그 활용)
+
+- **도커 설정**:
+  - Docker 멀티 스테이지 빌드로 이미지 최적화
+    - 의존성 설치 → 빌드 → 실행 단계 분리
+    - 프로덕션 의존성만 포함하여 이미지 크기 최적화
+  - Next.js standalone 설정으로 컨테이너 환경 최적화
+  - 환경변수를 통한 GitHub API 설정 지원
+  - Docker Hub을 통한 이미지 배포 및 공유
 
 ---
 
@@ -167,6 +176,57 @@ pnpm dev
 - GitHub API 사용을 위해 유효한 GitHub 토큰이 필요합니다.
 - 환경 변수 설정이 올바르지 않으면 API 호출이 실패할 수 있습니다.
 
+## 🐳 도커 이미지 실행 가이드
+
+> 도커 이미지를 다운받아 실행하는 방법입니다.
+
+### 📦 도커 이미지로 실행하기
+
+#### 1. 전제 조건
+
+- Docker 설치 필요
+- GitHub Personal Access Token 필요
+
+#### 2. 도커 이미지 실행
+
+**방법 1: 자동 다운로드 및 실행 (권장)**
+
+```bash
+docker run -p 3000:3000 \
+  -e GITHUB_OWNER="본인 깃허브 이름" \
+  -e GITHUB_REPO="본인 레포지토리" \
+  -e GITHUB_PAT="본인 깃허브 토큰" \
+  leejungmindocker/kakao-enterprise-homework-leejungmin:latest
+```
+
+**방법 2: 수동으로 다운로드 후 실행**
+
+```bash
+docker pull leejungmindocker/kakao-enterprise-homework-leejungmin:latest
+
+docker run -p 3000:3000 \
+  -e GITHUB_OWNER="본인 깃허브 이름" \
+  -e GITHUB_REPO="본인 레포지토리" \
+  -e GITHUB_PAT="본인 깃허브 토큰" \
+  leejungmindocker/kakao-enterprise-homework-leejungmin:latest
+```
+
+#### 3. 브라우저 접속
+
+1. 터미널에서 ✓ Ready in XXXms 메시지 확인
+2. 브라우저에서 http://localhost:3000 접속
+3. 애플리케이션 정상 작동 확인
+
+### 🔧 환경변수 설정 안내
+
+| 환경변수       | 설명                         | 예시           |
+| -------------- | ---------------------------- | -------------- |
+| `GITHUB_OWNER` | GitHub 사용자명 또는 조직명  | `octocat`      |
+| `GITHUB_REPO`  | 레포지토리 이름              | `Hello-World`  |
+| `GITHUB_PAT`   | GitHub Personal Access Token | `ghp_xxxxxxxx` |
+
+> **주의**: 실제 GitHub 토큰을 사용해야 API가 정상 작동합니다. 토큰은 `repo` 권한이 필요합니다.
+
 ---
 
 ## 📝 추가 설명
@@ -201,6 +261,7 @@ pnpm dev
 - 초기 디자인 설계시에 필요한 컬러 셋 받기
 - 과제 스케줄 관리
 - 컴포넌트 크기 및 배치등에 대한 베이스 디자인
+- README.md 작성 가이드
 
 ---
 
