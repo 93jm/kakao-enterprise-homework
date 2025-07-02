@@ -2,13 +2,12 @@
 
 import { useState } from 'react'
 import { Table, Pagination, VIEW_TYPE, Title, MoreDropdown, Button, ConfirmModal } from '@/shared/ui'
-import { BoardCard } from '@/features/serviceBoard/ui'
+import { BoardCard, SearchBar } from '@/features/serviceBoard/ui'
 import { useDeleteIssueMutation, useIssues } from '@/features/github'
 import { useViewTypeStore } from '@/shared/store/viewType'
 import { useRouter } from 'next/navigation'
 import { useModal } from '@/shared/hooks'
 import { toast } from 'sonner'
-import { SearchBar } from '@/features/serviceBoard/ui/SearchBar'
 import { StateDisplay } from '@/shared/ui/StateDisplay'
 
 const ITEMS_PER_PAGE = 10

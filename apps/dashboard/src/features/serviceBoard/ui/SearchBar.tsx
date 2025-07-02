@@ -9,7 +9,7 @@ interface SearchBarProps {
   onSearch: (query: string) => void
 }
 
-export const SearchBar = ({ value, onSearch }: SearchBarProps) => {
+const SearchBar = ({ value, onSearch }: SearchBarProps) => {
   const [searchQuery, setSearchQuery] = useState(value)
 
   useEffect(() => {
@@ -41,3 +41,5 @@ export const SearchBar = ({ value, onSearch }: SearchBarProps) => {
     </div>
   )
 } 
+
+export default SearchBar

@@ -13,7 +13,7 @@ interface BoardCardProps {
   items: BoardItem[]
 }
 
-export function BoardCard({ items }: BoardCardProps) {
+const BoardCard = ({ items }: BoardCardProps) => {
   const router = useRouter()
   const { openModal, closeModal } = useModal()
   const { mutate: deleteIssue } = useDeleteIssueMutation()
@@ -67,3 +67,5 @@ export function BoardCard({ items }: BoardCardProps) {
     </div>
   )
 }
+
+export default BoardCard

@@ -9,6 +9,7 @@ import { ConfirmModal } from '@/shared/ui'
 import { toast } from 'sonner'
 import * as styles from './page.css'
 import { use } from 'react'
+import { DetailSkeleton } from '@/features/serviceBoard/ui'
 
 interface Props {
   params: Promise<{ id: string }>
@@ -54,11 +55,7 @@ const ServiceBoardDetailPage = ({ params }: Props) => {
   }
 
   if (isLoading) {
-    return <div>Loading...</div>
-  }
-
-  if (!issue) {
-    return <div>게시글을 찾을 수 없습니다.</div>
+    return <DetailSkeleton />
   }
 
   return (
